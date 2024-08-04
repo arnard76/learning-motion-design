@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<style>
+    .hiding {
+        max-width: 0;
+        overflow: hidden;
+        display: inline-flex;
+        white-space: pre;
+        transition: max-width 2s ease-in;
+    }
+
+    h2:hover .hiding {
+        max-width: 100vh;
+
+    }
+</style>
+
+<body>
+    <h2>The Pollen<span><span class="hiding"> Calen</span>dar</span></h2>
+</body>
+
+</html>

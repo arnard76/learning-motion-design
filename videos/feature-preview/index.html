@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<style>
+    video {
+        border-radius: 1rem;
+        border: 3px solid rgb(160, 11, 153);
+        cursor: pointer;
+    }
+
+    dialog button {
+        display: block;
+
+    }
+</style>
+
+
+<body>
+    <h1>Previews of features</h1>
+    <h2>Finding the levels of Oak pollen and Grass pollen in the air during 1st week of June.</h2>
+    <i>click to try out the filter on the pollen calendar</i>
+    <br>
+    <video width="500" autoplay muted>
+        <source src="./exampleFeaturePreviewVideo.mp4">
+        <source src="./Examplefeaturepreviewvideo.webm">
+    </video>
+    <br>
+    <dialog>
+        <button>go fullscreen</button>
+        <iframe src="https://www.aapc-nz.org/pollen" width="1080" style="height: 100vh;"></iframe>
+    </dialog>
+    <iframe src="https://www.aapc-nz.org/pollen" width="1080" allow="fullscreen" style="display: none;"></iframe>
+</body>
+
+<script>
+    const featurePreviewVideoElement = document.querySelector("video")
+    featurePreviewVideoElement.playbackRate = 1.4
+
+    const featurePreviewInteractiveElement = document.querySelector("dialog")
+    const topLevelIframe = document.querySelector("body > iframe")
+
+    // document.addEventListener('click', () => {
+    //     console.log('click')
+    //     // topLevelIframe.style.display = "none"
+    //     featurePreviewInteractiveElement.style.display = "none"
+    //     featurePreviewInteractiveElement.close()
+    // }) 
+    featurePreviewInteractiveElement.addEventListener('click', () => {
+        var rect = featurePreviewInteractiveElement.getBoundingClientRect();
+        var isInDialog = (rect.top <= event.clientY && event.clientY <= rect.top + rect.height &&
+            rect.left <= event.clientX && event.clientX <= rect.left + rect.width);
+        if (!isInDialog) {
+            featurePreviewVideoElement.style.display = "initial"
+            topLevelIframe.style.display = "none"
+            featurePreviewInteractiveElement.close();
+
+        }
+    })
+    featurePreviewInteractiveElement.querySelector('button').addEventListener('click', () => {
+        topLevelIframe.style.display = "block"
+        topLevelIframe.style.visibility = "initial"
+        console.log(topLevelIframe)
+
+        topLevelIframe.requestFullscreen()
+
+
+    })
+
+
+    featurePreviewVideoElement.addEventListener('click', (event) => {
+        console.log('clicked on calendar')
+        featurePreviewVideoElement.style.display = "none"
+        topLevelIframe.style.display = "block"
+        topLevelIframe.style.visibility = "hidden"
+        featurePreviewInteractiveElement.showModal()
+
+
+    })
+
+    topLevelIframe.addEventListener("fullscreenchange", (event) => {
+        topLevelIframe.style.display = "none"
+        featurePreviewInteractiveElement.showModal()
+    });
+</script>
+
+</html>
